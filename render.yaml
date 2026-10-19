@@ -1,0 +1,18 @@
+# Optional: Render "Blueprint" for the API. New > Blueprint > pick your repo.
+services:
+  - type: web
+    name: customerai-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DATABASE_URL
+        sync: false      # paste your Supabase Session pooler string in the Render dashboard
+      - key: ADMIN_KEY
+        sync: false      # your private upload key
+      - key: CORS_ORIGINS
+        sync: false      # your Streamlit address, e.g. https://customerai.streamlit.app
